@@ -1,0 +1,23 @@
+.option-group {/*specific "signup form"*/
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.option-group button {/*specific "signup form"*/
+    margin-top: 35px;
+    margin-bottom: 20px;
+    width: 135px;
+}
+.option-group1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.option-group1 button[type="submit"] {/*specific*/
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+.option-group1 button[type="button"] {/*specific*/
+    margin-top:10px;
+    margin-bottom: 25px;
+}
