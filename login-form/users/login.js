@@ -3,7 +3,7 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
 
   const formData = {
     action: "login", // tell Apps Script it's a login request
-    sonic_email: e.target.sonic_account.value,
+    sonic_email: e.target.sonic_email.value,
     user_password: e.target.user_password.value
   };
 
