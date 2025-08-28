@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonic Gym</title>
+    <link rel="stylesheet" href="universal.css">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <form action="/login" method="POST">
+        <div class="container">    
+            <p class="p1"><b>Sonic Gym Admin</b></p>
+            
+            <div class="credential-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <button type="submit">Login</button>
+            
+            <p class="p2">Original username and password are set by the system admin.</p>    
+        </div>  
+    </form>
+</body>
+</html>
