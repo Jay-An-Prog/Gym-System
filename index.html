@@ -1,13 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liveness Check (Blink)</title>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+  <style>
+    video, canvas { width: 300px; border-radius: 10px; margin-top: 10px; }
+    #status { font-weight: bold; margin-top: 10px; }
+  </style>
 </head>
 <body>
-    <h1>Welcome</h1>
-    <p><a href="login-form/users/login.html">Go to Login Form</a></p>
-    <p><a href="member-dashboard/index/profile.html">Go to website</a></p>
+  <h2>Take a Selfie with Blink Verification</h2>
+
+  <video id="camera" autoplay playsinline></video>
+  <canvas id="output"></canvas>
+  <div id="status">Please blink once to verify...</div>
+  <canvas id="snapshot" style="display:none;"></canvas>
+  <img id="photo" style="max-width:300px; margin-top:10px; display:none;"/>
+
+  <script>
+    const video = document.getElementById("camera");
+    const canvas = document.getElementById("output");
+    const ctx = canvas.getContext("2d");
+    const snapshot = document.getElementById("snapshot");
+    const photo = document.getElementById("photo");
+    const statusEl = document.getElementById("status");
+
+    let blinked = false;
+    let eyesClosed = false;
+
+    // Eye landmarks (from MediaPipe)
+    const LEFT_EYE = [159, 145]; // upper + lower eyelid
+    const RIGHT_EYE = [386, 374];
+
+    function getEAR(landmarks, eye) {
+      const [upper, lower] = eye;
+      const dy = Math.abs(landmarks[upper].y - landmarks[lower].y);
+      return dy;
+    }
+
+    function onResults(results) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(results.image, 0, 0, canvas.width, canvas.height);
+
+      if (results.multiFaceLandmarks && results.multiFaceLandmarks.length > 0) {
+        const landmarks = results.multiFaceLandmarks[0];
+
+        const leftEAR = getEAR(landmarks, LEFT_EYE);
+        const rightEAR = getEAR(landmarks, RIGHT_EYE);
+        const avgEAR = (leftEAR + rightEAR) / 2;
+
+        // If eyes are closed (threshold ~0.01–0.015 depending on camera scale)
+        if (avgEAR < 0.015) {
+          eyesClosed = true;
+          statusEl.innerText = "Eyes closed... now open!";
+        } else if (eyesClosed && !blinked) {
+          blinked = true;
+          statusEl.innerText = "Blink detected ✅ Taking photo...";
+          takePhoto();
+        }
+      }
+    }
+
+    function takePhoto() {
+      snapshot.width = video.videoWidth;
+      snapshot.height = video.videoHeight;
+      const ctxSnap = snapshot.getContext("2d");
+      ctxSnap.drawImage(video, 0, 0, snapshot.width, snapshot.height);
+
+      const dataURL = snapshot.toDataURL("image/png");
+      photo.src = dataURL;
+      photo.style.display = "block";
+      statusEl.innerText = "Photo captured successfully 🎉";
+    }
+
+    const faceMesh = new FaceMesh({
+      locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
+    });
+    faceMesh.setOptions({
+      maxNumFaces: 1,
+      refineLandmarks: true,
+      minDetectionConfidence: 0.5,
+      minTrackingConfidence: 0.5
+    });
+    faceMesh.onResults(onResults);
+
+    const camera = new Camera(video, {
+      onFrame: async () => { await faceMesh.send({ image: video }); },
+      width: 300,
+      height: 300
+    });
+    camera.start();
+  </script>
 </body>
 </html>
