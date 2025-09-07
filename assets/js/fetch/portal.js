@@ -30,9 +30,7 @@ if (loginForm) {
         localStorage.setItem("can_update", "yes");
 
         // redirect to member dashboard
-        const resolved = new URL('html/member-dashboard/profile.html', window.location.href).href;
-        console.log('Resolved target URL ->', resolved);
-        window.location.href = "/html/member-dashboard/profile.html";
+        window.location.href = "/Gym-System/html/member-dashboard/profile.html";
       } else if (data.result === "error") {
         alert("Invalid username or password");
       } else {
@@ -84,4 +82,5 @@ if (signupForm) {
   });
 
 }  
+
 
