@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonic Gym</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="universal.css">
+    <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+    <form id="signupForm">
+        <div class="container">
+            <p style="font-size: 25px;"><b>Sign up</b></p>
+            
+            <!-- Personal Information -->
+            <div class="credential-group">
+                <label>Username:</label>
+                <input type="text" name="user_name" placeholder="shark" required>
+            </div>
+            
+            <div class="credential-group"> 
+                <label>Email:</label>
+                <input type="email" name="sonic_email" placeholder="shark@sonic.com" 
+                       pattern="^[a-zA-Z0-9]{1,8}@sonic\.com$" required>
+            </div>
+            
+            <!-- Login Credentials -->
+            <div class="credential-group">
+                <label>Password:</label>
+                <input type="password" id="userPassword" name="user_password" 
+                       placeholder="abcd1234" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" required minlength="8">
+            </div>
+            
+            <div class="credential-group">
+                <label>Confirm Password:</label>
+                <input type="password" id="confirmPassword" placeholder="abcd1234" required minlength="8">
+            </div>
+            
+            <div class="option-group">
+                <button type="submit"><b>Sign Up</b></button>  
+
+                <button type="button" id="googleLoginButton">
+                    <img src="../../../images/google-icon.png" alt="Google" class="google-logo">
+                    Sign up with Google
+                </button>
+            </div>
+
+            <p>Already have an account? <a href="login.html">Log in</a></p>
+        </div>
+    </form>    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="signup.js"></script>
+    <script src="../../backend/users/portal.js"></script>
+</body>
+</html>
