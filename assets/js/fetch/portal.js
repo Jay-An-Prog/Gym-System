@@ -29,7 +29,12 @@ if (loginForm) {
         localStorage.setItem("needs_update", "yes");
 
         // redirect to member dashboard
-        window.location.assign("../member-dashboard/profile.html");
+        // Get the repo name from the current pathname
+        const repoName = window.location.pathname.split("/")[1];
+
+        // Build the correct URL dynamically
+        window.location.href = `/${repoName}/pages/member-dashboard/profile.html`;
+
       } else if (data.result === "error") {
         alert("Invalid username or password");
       } else {
@@ -81,6 +86,7 @@ if (signupForm) {
   });
 
 }  
+
 
 
 
