@@ -1,0 +1,54 @@
+.id-card {
+    width: 280px;
+    height: 340px;
+    padding: 15px;
+    margin: 10px 0;
+    border: 2px solid #333;
+    border-radius: 12px;
+    text-align: center;
+    background: #71869c;
+}
+.id-header img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 8px;
+}
+.controls button {
+    width: 130px;
+    margin: 15px 0;
+    margin-right: 15px;
+    padding: 8px 12px;
+    border: 0.1px solid gray;
+    border-radius: 5px;
+    cursor: pointer;
+}
+select {
+    margin-left: 40px;
+    width: 128px;
+    padding: 5px;
+}
+
+@media (max-width: 768px) {
+    .id-card {
+        width: 220px;
+    }
+    .controls {
+        display: flex;
+        gap: 20px;
+    }
+    .controls button {
+        width: 100px;
+        margin: 15px 0;
+        font-size: 12px;
+    }
+    select {
+        width: 100px;
+        padding-left: 12px;
+        margin-left: 9px;
+        font-size: 12px;
+    }
+    h3 {
+        margin-left: 25px;
+    }
+}
