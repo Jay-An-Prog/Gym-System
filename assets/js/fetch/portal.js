@@ -30,7 +30,7 @@ if (loginForm) {
         localStorage.setItem("can_update", "yes");
 
         // redirect to member dashboard
-        window.location.href = "../../../html/member-dashboard/profile.html";
+        window.location.href = "/html/member-dashboard/profile.html";
       } else if (data.result === "error") {
         alert("Invalid username or password");
       } else {
@@ -80,4 +80,5 @@ if (signupForm) {
     })
     .catch(err => console.error("Error:", err));
   });
+
 }  
