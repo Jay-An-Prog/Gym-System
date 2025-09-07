@@ -1,0 +1,120 @@
+*, *::before, *::after {/*General*/
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body {/*General*/
+    height: 100;
+    font-family: Arial, sans-serif;
+} 
+body {/*General*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+body::before {/*General*/
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../../images/gym-background.jpg') center/cover no-repeat;
+    filter: brightness(40%);
+    z-index: -1;
+    pointer-events: none;
+}
+.container {/*specific*/
+    position: absolute;
+    transform: translateX(-50%);
+    top: 10%;
+    width: 380px;
+    height: 520px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /*for fancy glass background*/
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.credential-group {/*specific*/
+    display: flex;
+    flex-direction: column;
+}
+.credential-group input {/*specific*/
+    width: 280px;
+    height: 30px;
+    margin: 4px 10px;
+    padding: 0 10px;
+    border: none;
+    border-radius: 5px;
+}
+.credential-group label {/*specific*/
+    margin-top: 18px;
+    margin-left: 10px;
+}       
+.google-logo {/*specific*/
+    width: 20px;
+    height: auto;
+    margin-right: 5px; 
+}
+button {/*specific*/
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: white;
+    background: #24A0ED;
+    transition: 0.2s ease;
+    cursor: pointer;
+}
+button:hover {/*specific*/
+    background: #0d7bc0;
+}
+button:active {/*specific*/
+    font-size: 0.6em;
+}
+label {/*specific*/
+    color: white;
+}
+a {/*specific*/
+    text-decoration: none;
+    text-shadow: #24A0ED;
+    color: #24A0ED;
+    cursor: pointer;
+}
+p {/*specific*/
+    margin: 10px 0;
+    color: white;
+}
+
+/*UI adjustment for mobile 364-800*/
+@media screen and (max-width: 600px) {
+    .container {
+        width: 310px;
+    }
+    .credential-group input {
+        width: 250px;
+    }
+    .checkbox-group div {
+        width: 228px;
+        margin-left: 8px;
+        gap: 25px;
+    }
+    .checkbox-group p {
+        font-size: 8px;
+    }
+    .checkbox-group label {
+        font-size: 12px;
+    }
+    button {
+        width: 120px;
+    }
+}
