@@ -1,0 +1,170 @@
+/*General*/
+html, body {
+    height: 100vh;
+}
+body {
+    display: flex;  
+    height: 100vh;
+    position: relative; /*must for 'before with absolute position*/
+    background: #f4f4f4; 
+} 
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../../../images/gym-background.jpg') center/cover no-repeat;
+    filter: brightness(40%);
+    z-index: -1;
+    pointer-events: none;
+}
+.gym-logoname {
+    background: rgba(0, 0, 0, 0.767);
+    display: flex;
+    align-items: center;
+}
+.gym-logoname img {
+    width: 50px;
+    height: 50px;
+    margin-left: 10px;
+}
+.sidebar {
+    width: 220px; 
+    background: #2c3e50; 
+    color: white; 
+    opacity: 95%; 
+}
+.sidebar h2 {
+    margin: 30px 4px 30px;
+    font-size: 25px;
+}
+.sidebar li {
+    list-style: none;
+    padding: 10px 20px;
+    margin-left: -32px; /*fix the left gap after implementation of bootstrap*/
+    border-bottom: 1px solid rgb(141, 141, 141);
+    cursor: pointer;
+}
+.sidebar li:last-child {
+    background: #096aa7;
+}
+.sidebar ul li:not(:last-child):hover { 
+    background: #4f5d6b; 
+}
+.sidebar ul li:last-child:hover { 
+    background: #0c94e9; 
+}
+.sidebar a {
+    color: white;
+} 
+.main {
+    flex: 1; 
+    padding: 30px; 
+    position: relative;
+    overflow-y: auto; 
+} 
+.section {
+    background: #FFFFF0; 
+    opacity: 95%; 
+    border-radius: 10px; 
+    padding: 20px; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+}
+a {
+    position: relative; /* anchor for ::before */
+    text-decoration: none;  
+}
+a::before {
+    content: "";
+    position: absolute;
+    top: -10px;   /* expand clickable area */
+    left: -20px;
+    right: -155px;
+    bottom: -10px; 
+}
+
+/* floating sidebar for mobile */
+/* Burger button */
+.burger {
+    display: none; /* hidden by default */
+    font-size: 15px;
+    padding: 12px;
+    cursor: pointer;
+    background: #2c3e50;
+    color: white;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 2000;
+    border-radius: 5px;
+}
+
+/* Sidebar default */
+.sidebar {
+    transition: left 0.3s;
+}
+
+/* Loading Box */
+.loading {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  z-index: 9999;
+}
+
+/* Spinner animation */
+.spinner {
+  border: 6px solid #f3f3f3; 
+  border-top: 6px solid #3498db;
+  border-radius: 50%;
+  width: 50px; height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Mobile (floating sidebar) */
+@media (max-width: 768px) {
+    .burger {
+        display: block;
+    }
+    .sidebar h2 {
+        margin-top: 80px;
+        font-size: 22px;
+    }
+    .gym-logoname img {
+        margin-top: 50px;
+        margin-right: 10px;
+        width: 38px;
+        height: 38px;
+    }
+    /*Master responsive*/
+    .section {
+        width: 262px;       /* fixed width */
+        max-width: 262px;
+        min-width: 262px;
+        margin: 60px auto;  /* top-bottom = 60px, left-right = auto → centers it */
+    }
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -220px; /* hidden off-screen */
+        height: 100%;
+        z-index: 1500;
+    }
+    .sidebar.open {
+        left: 0; /* slides in on top */
+    } 
+}
