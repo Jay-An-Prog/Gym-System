@@ -7,7 +7,10 @@ function logout() {
         sessionStorage.clear();
         
         // Redirect to another HTML page (e.g., login.html)
-        window.location.href = "../../../../pages/portal/login.html";
+        // Get the repo name from the current pathname GitHub
+        const repoName = window.location.pathname.split("/")[1];
+        // Build the correct URL dynamically
+        window.location.href = `/${repoName}/pages/portal/login.html`;
     }
 }
 
@@ -57,4 +60,5 @@ function stopBox() {
 }
 setInterval(() => {
     if (sessionStorage.getItem("loading_box") === "show") startBox(); // Check current state on page load
+
 }, 500); // 500 ms = 0.5 seconds
