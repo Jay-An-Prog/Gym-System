@@ -23,6 +23,8 @@ if (loginForm) {
     .then(res => res.json())
     .then(data => {
       if (data.result === "success") {
+        // Nake sure it cleans the session before users enter
+        sessionStorage.clear();
         ///////////////// Marks the session storage
         ///////////////// Static info
         sessionStorage.setItem("member_id", data.member_id);
@@ -93,3 +95,4 @@ if (signupForm) {
   });
 
 }
+
