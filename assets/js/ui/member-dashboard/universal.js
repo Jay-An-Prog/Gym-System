@@ -8,10 +8,6 @@ function logout(bypass = false) {
     }
     
     if (confirmLogout) {
-        ///////////////// Marks the session storage
-        sessionStorage.clear();
-        
-        
         // Redirect to another HTML page (e.g., login.html)
         // Get the repo name from the current pathname GitHub
         const repoName = window.location.pathname.split("/")[1];
@@ -77,3 +73,4 @@ setInterval(() => {
     if (!sessionStorage.getItem("member_id")) logout(true); // Immediately logout when the member id is undefined or empty
 
 }, 500); // 500 ms = 0.5 seconds
+
