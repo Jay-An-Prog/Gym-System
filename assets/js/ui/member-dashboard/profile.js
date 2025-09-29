@@ -74,14 +74,20 @@ function updater() {
             case "pending":
                 statusNotice.textContent = "Welcome to Smart Sonic Gym! Your account is waiting for activation. Hang tight, you’ll be ready to train in no time!";
                 statusNotice.classList.add("status-pending");
+
+                document.getElementById("submitBtn").style.display = "block";
                 break;
             case "activated":
                 statusNotice.textContent = "Your account is now active, time to power up your fitness journey! Get ready and start training today.";
                 statusNotice.classList.add("status-activated");
+
+                document.getElementById("submitBtn").style.display = "none";
                 break;
             default: // Set back to pending activation UI when 
                 statusNotice.textContent = "We couldn’t find your account in the pending activation list. Please re-upload your details or contact the admin for assistance.";
                 statusNotice.classList.add("status-pending");
+
+                document.getElementById("submitBtn").style.display = "block";
                 break;
         }
 
