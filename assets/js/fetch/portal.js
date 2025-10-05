@@ -2,7 +2,7 @@
 const loginURL = "https://script.google.com/macros/s/AKfycbyCZ25uaJo_08vntZ_N4ck_ZEHHhgx0SgJYEigxwhd-ULzKmKDCDjXwLdnbES3reiF-/exec";
 const signupURL = "https://script.google.com/macros/s/AKfycbyCZ25uaJo_08vntZ_N4ck_ZEHHhgx0SgJYEigxwhd-ULzKmKDCDjXwLdnbES3reiF-/exec";
 
-const loginForm = document.getElementById("loginForm");
+let loginForm = document.getElementById("loginForm");
 
 // Auto-login using saved token
 if (localStorage.getItem("login_token")) {
@@ -133,4 +133,5 @@ if (signupForm) {
             sessionStorage.setItem("portal_loading_box", "hide"); // hide AFTER request finishes
     });
   });
+
 }
