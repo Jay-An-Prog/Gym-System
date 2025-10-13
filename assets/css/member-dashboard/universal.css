@@ -45,7 +45,6 @@ body::before {
     list-style: none;
     padding: 10px 20px;
     margin-left: -32px; /*fix the left gap after implementation of bootstrap*/
-    border-bottom: 1px solid rgb(141, 141, 141);
     cursor: pointer;
 }
 .sidebar li:last-child {
@@ -204,4 +203,5 @@ a {
     a {
         font-size: 12.5px;
     }
+
 }
