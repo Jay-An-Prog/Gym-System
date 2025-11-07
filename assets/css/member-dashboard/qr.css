@@ -177,7 +177,7 @@
         font-size: 18px;
     }
     .active-checkin-section {
-        max-width: 90%;         /* Auto-fit mobile width */
+        max-width: 100%;         /* Auto-fit mobile width */
         padding: 16px;
     }
     .checkin-row {
@@ -198,4 +198,5 @@
     .option-content {
         width: 255px;
     }
+
 }
