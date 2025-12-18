@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/*General*/
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body {
+    height: 100vh;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.6;
+}
+body {
+    display: flex;  
+    height: 100vh;
+    position: relative; /*must for 'before with absolute position*/
+    background: #f4f4f4; 
+} 
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../../images/gym-background.jpg') center/cover no-repeat;
+    filter: brightness(40%);
+    z-index: -1;
+    pointer-events: none;
+}
+.gym-logoname {
+    background: rgba(0, 0, 0, 0.767);
+    display: flex;
+    align-items: center;
+}
+.gym-logoname img {
+    width: 50px;
+    height: 50px;
+    margin-left: 10px;
+}
+.sidebar {
+    width: 220px; 
+    background: #2c3e50; 
+    color: white; 
+    transition: left 0.3s;
+    z-index: 10; /* above page wrapper */
+}
+.sidebar h2 {
+    margin: 30px 4px 30px;
+    font-size: 25px;
+}
+.sidebar li {
+    list-style: none;
+    padding: 10px 20px;
+    border-bottom: 1px solid rgb(141, 141, 141);
+    cursor: pointer;
+}
+.sidebar li:last-child {
+    background: #096aa7;
+}
+.sidebar ul li:not(:last-child):hover { 
+    background: #4f5d6b; 
+}
+.sidebar ul li:last-child:hover { 
+    background: #0c94e9; 
+}
+.sidebar a {
+    color: white;
+    position: relative; /* anchor for ::before */ 
+}
+.sidebar a::before { /* Bug patched when only profile page has sliding section */
+    content: "";
+    position: absolute;
+    top: -10px;   /* expand clickable area */
+    left: -20px;
+    right: -155px;
+    bottom: -10px; 
+}
+.page-wrapper {
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(0, 0, 0, 0.5); /* dim background */
+    z-index: 8; /* Below sidebar */
+}
+.main {
+    flex: 1; 
+    padding: 30px; 
+    position: relative;
+    overflow-y: auto; 
+} 
+.section {
+    background: #FFFFF0; 
+    opacity: 95%; 
+    border-radius: 10px; 
+    padding: 20px; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+}
+a {
+    text-decoration: none; 
+}
+
+/* floating sidebar for mobile */
+/* Burger button */
+.burger {
+    display: none; /* hidden by default */
+    font-size: 15px;
+    padding: 12px;
+    cursor: pointer;
+    background: #2c3e50;
+    color: white;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    border-radius: 5px;
+    z-index: 1800;
+}
+
+/* activate background event click */
+.wrapper-active {
+    display: block;
+}
+
+/* Loading Box */
+.loading {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  z-index: 9999;
+}
+/* Spinner animation */
+.spinner {
+  width: 40px;
+  aspect-ratio: 1;
+  --c: linear-gradient(rgb(42, 170, 255) 0 0);
+  --r1: radial-gradient(farthest-side at bottom,rgb(42, 170, 255) 93%,#0000);
+  --r2: radial-gradient(farthest-side at top   ,rgb(42, 170, 255) 93%,#0000);
+  background: 
+    var(--c) ,var(--r1),var(--r2),
+    var(--c) ,var(--r1),var(--r2),
+    var(--c) ,var(--r1),var(--r2);
+  background-repeat: no-repeat;
+  animation: l2 1s infinite alternate;
+}
+@keyframes l2 {
+  0%,25% {
+    background-size: 8px 0,8px 4px,8px 4px,8px 0,8px 4px,8px 4px,8px 0,8px 4px,8px 4px;
+    background-position: 0 50%,0 calc(50% - 2px),0 calc(50% + 2px),50% 50%,50% calc(50% - 2px),50% calc(50% + 2px),100% 50%,100% calc(50% - 2px),100% calc(50% + 2px);
+ }
+ 50% {
+    background-size: 8px 100%,8px 4px,8px 4px,8px 0,8px 4px,8px 4px,8px 0,8px 4px,8px 4px;
+    background-position: 0 50%,0 calc(0% - 2px),0 calc(100% + 2px),50% 50%,50% calc(50% - 2px),50% calc(50% + 2px),100% 50%,100% calc(50% - 2px),100% calc(50% + 2px);
+ }
+ 75% {
+    background-size: 8px 100%,8px 4px,8px 4px,8px 100%,8px 4px,8px 4px,8px 0,8px 4px,8px 4px;
+    background-position: 0 50%,0 calc(0% - 2px),0 calc(100% + 2px),50% 50%,50% calc(0% - 2px),50% calc(100% + 2px),100% 50%,100% calc(50% - 2px),100% calc(50% + 2px);
+ }
+ 95%,100% {
+    background-size: 8px 100%,8px 4px, 8px 4px,8px 100%,8px 4px,8px 4px,8px 100%,8px 4px,8px 4px;
+    background-position: 0 50%,0 calc(0% - 2px),0 calc(100% + 2px),50% 50%,50% calc(0% - 2px),50% calc(100% + 2px),100% 50%,100% calc(0% - 2px),100% calc(100% + 2px);
+ }
+}
+
+/* Mobile (floating sidebar) */
+@media (max-width: 768px) {
+    .burger {
+        display: block;
+    }
+    .sidebar h2 {
+        margin-top: 80px;
+        font-size: 22px;
+    }
+    .gym-logoname img {
+        margin-top: 50px;
+        margin-right: 10px;
+        width: 38px;
+        height: 38px;
+    }
+    /*Master responsive*/
+    .section {
+        width: 262px;       /* fixed width */
+        max-width: 262px;
+        min-width: 262px;
+        margin: 60px auto;  /* top-bottom = 60px, left-right = auto → centers it */
+    }
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -220px; /* hidden off-screen */
+        height: 100%;
+        z-index: 1500;
+    }
+    .sidebar a {
+        pointer-events: none; /* disable links when sidebar hidden. Bug patched */
+    }
+    .sidebar.open {
+        left: 0; /* slides in */
+    }
+    .sidebar.open a {
+        pointer-events: auto; /* enable links only when sidebar is open */
+    }
+    a {
+        font-size: 12.5px;
+    }
+}
