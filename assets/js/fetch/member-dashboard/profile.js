@@ -150,12 +150,25 @@ function base64ToFile(base64, filename) {
     return new File([uintArray], filename, { type: "image/jpeg" });
 }
 
+// CHECK IF CANVAS HAS IMAGE
+function canvasHasImage(canvas) {
+    const ctx = canvas.getContext("2d");
+    const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+
+    return pixels.some(channel => channel !== 0);
+}
+
 // ===================================================
 // 📤 FORM SUBMIT → APPWRITE (IMAGES) + FIRESTORE (DATA)
 // ===================================================
 uploadForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
+    if (!canvasHasImage(faceCanvas)) {
+        alert("Please take a selfie first.");
+        return;
+    }
+    
     let confirmRequest = confirm(
         "Please review your information carefully. Click OK to proceed or Cancel to make changes."
     );
@@ -269,4 +282,5 @@ uploadForm.addEventListener("submit", async (e) => {
     } finally {
         sessionStorage.setItem("loading_box", "hide");
     }
+
 });
