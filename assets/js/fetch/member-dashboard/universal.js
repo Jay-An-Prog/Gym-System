@@ -36,9 +36,11 @@ function redirectTo(path) {
     window.location.href = redirectUrl;
 }
 
+let logoutNotExecuted = true; // flag
 setInterval(() => {
-    if (!sessionStorage.getItem("member_id")) {    // Immediately logout when the member id is undefined or empty
+    if (!sessionStorage.getItem("member_id") && logoutNotExecuted) {    // Immediately logout when the member id is undefined or empty
         alert("Session expired.");
+        logoutNotExecuted = false;
 
         sessionStorage.clear(); // Clear local session
         redirectTo("/pages/portal.html");
