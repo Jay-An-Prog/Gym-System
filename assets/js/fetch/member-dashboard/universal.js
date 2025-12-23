@@ -4,6 +4,7 @@ import { signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth
 
 // Make logout available to HTML onclick=""
 window.logout = logout;
+let logoutNotExecuted = true; // flag
 
 // --- LOGOUT FUNCTION ---
 async function logout() {
@@ -11,11 +12,15 @@ async function logout() {
     if (!confirmLogout) return;
 
     try {
+        logoutNotExecuted = false;
+
         await signOut(auth); // Secure Firebase logout
         sessionStorage.clear(); // Clear local session
 
         redirectTo("/pages/portal.html");
     } catch (error) {
+        logoutNotExecuted = true;
+        
         console.error("Logout error:", error);
         alert("Logout failed.");
     }
@@ -36,7 +41,6 @@ function redirectTo(path) {
     window.location.href = redirectUrl;
 }
 
-let logoutNotExecuted = true; // flag
 setInterval(() => {
     if (!sessionStorage.getItem("member_id") && logoutNotExecuted) {    // Immediately logout when the member id is undefined or empty
         alert("Session expired.");
