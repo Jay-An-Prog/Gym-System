@@ -1,30 +1,24 @@
-// Show and render profile image so it can be viewed, manipulated by js like download, and print.
-async function loadFaceImage() {
-    const url = sessionStorage.getItem("face_image_url");
-    if (!url) return;
-
-    const lastUrl = sessionStorage.getItem("last_face_image_url");
-    if (url === lastUrl) return;
-
-    try {
-        const response = await fetch(url, { mode: 'cors' });
-        const blob = await response.blob();
-        const reader = new FileReader();
-        reader.onload = function() {
-            document.getElementById("defaultPic").src = reader.result;
-            sessionStorage.setItem("last_face_image_url", url);
-        };
-        reader.readAsDataURL(blob);
-    } catch (err) {
-        console.error("Failed to load image for ID card:", err);
-    }
-}
-
 function updater() {
     const qrImg = document.getElementById("qrWrapper");
     if (sessionStorage.getItem("id_name") && sessionStorage.getItem("phone_number") && 
         sessionStorage.getItem("user_address") && sessionStorage.getItem("status") === "activated") { // Check if the current card is valid to update the UI
-        loadFaceImage();
+        // Show and render profile image so it can be viewed, manipulated by js like download, and print.
+        window.addEventListener("DOMContentLoaded", async () => {
+            const url = sessionStorage.getItem("face_image_url");
+            if (!url) return;
+            
+            try {
+                const response = await fetch(url, { mode: 'cors' }); // fetch the image
+                const blob = await response.blob();
+                const reader = new FileReader();
+                reader.onload = function() {
+                    document.getElementById("defaultPic").src = reader.result; // set as data URL
+                };
+                reader.readAsDataURL(blob);
+            } catch (err) {
+                console.error("Failed to load image for ID card:", err);
+            }
+        });
         
         if (document.getElementById("idName").textContent !== sessionStorage.getItem("id_name"))
             document.getElementById("idName").textContent = sessionStorage.getItem("id_name");
@@ -227,3 +221,4 @@ optionBox.addEventListener("click", function(event) {
     optionBox.style.display = "none";
   }
 });
+
