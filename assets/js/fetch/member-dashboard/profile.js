@@ -52,11 +52,11 @@ toggleCameraBtn.addEventListener("click", async () => {
             "Please enable camera permission in your phone settings:\n" +
             "Settings → Apps → Camera → Permissions → Your Browser → Allow\n\n" +
             "OR\n\n" +
-            "To enable it in you current browser:\n" +
-            "Click the 🔒 lock icon in the address bar\n" +
-            "Go to Permissions\n" +
-            "Set Camera to Allow\n\n" +
-            "Then reload the page."
+            "To enable it in your current browser:\n" +
+            "1. Click the 🔒 lock icon in the address bar\n" +
+            "2. Go to Permissions\n" +
+            "3. Set Camera to Allow\n" +
+            "4. Reload the page"
         );
         cameraWrapper.style.display = "none";
     }
@@ -375,4 +375,5 @@ updateBtn.addEventListener("click", async () => {
     }
 
 });
+
 
