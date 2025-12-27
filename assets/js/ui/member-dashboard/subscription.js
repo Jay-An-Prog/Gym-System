@@ -25,7 +25,7 @@ function updater() {
         document.getElementById("yearlyBtn").classList.add("hidden");
         document.getElementById("cancelBtn").classList.remove("hidden");
 
-    } else if (sessionStorage.getItem("subscription_status") === "active") {
+    } else if (sessionStorage.getItem("subscription_status") === "active" && sessionStorage.getItem("status") === "activated") {
         // ---- Active UI ----
         const expirationStr = sessionStorage.getItem("expiration_date");
         if (!expirationStr) return; // safety check
@@ -114,3 +114,4 @@ updater();
 
 // Save interval ID so we can clear it later
 setInterval(updater, 500);
+
