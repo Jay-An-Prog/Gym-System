@@ -37,7 +37,7 @@ document.body.insertAdjacentHTML("beforeend", `
 document.body.insertAdjacentHTML("beforeend", `
   <div id="modalBox" class="modal-box" style="display: none;">
     <div class="modal-container" id="modalContainer">
-      <img src="../../../assets/images/modal-symbol.png">
+      <img src="/assets/images/modal-symbol.png">
       <p id="modalMessage">Please wait…</p>
     </div>
   </div>
@@ -100,4 +100,5 @@ createSessionBox({
 createSessionBox({
     elementId: "modalBox",
     storageKey: "modal_box"
+
 });
