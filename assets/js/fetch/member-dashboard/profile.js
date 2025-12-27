@@ -38,11 +38,40 @@ const uploadForm = document.getElementById("uploadForm");
 // ===================================================
 toggleCameraBtn.addEventListener("click", async () => {
     cameraWrapper.style.display = "flex";
+    // Detect permission state if supported
+    let permissionState = "unknown";
+    if (navigator.permissions && navigator.permissions.query) {
+        try {
+            const result = await navigator.permissions.query({ name: "camera" });
+            permissionState = result.state; // granted | unknown | prompt
+        } catch {}
+    }
+
+    // Show alert ONLY if camera is not yet granted
+    if (permissionState !== "granted") {
+        alert(
+            "This app needs access to your camera.\n\n" +
+            "Please tap 'Allow' on the next prompt to continue.\n\n" +
+            "If you block it, you will need to enable it manually in your phone or browser settings."
+        );
+    }
+
+    // Attempt to access the camera (this triggers the browser prompt)
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
         video.srcObject = stream;
     } catch (err) {
-        alert("Camera access denied: " + err);
+        alert(
+            "Camera access was blocked.\n\n" +
+            "Please enable camera permission in your phone settings:\n" +
+            "Settings → Apps → Camera → Permissions → Your Browser → Allow\n\n" +
+            "OR\n\n" +
+            "To enable it in you current browser:\n" +
+            "Click the 🔒 lock icon in the address bar\n" +
+            "Go to Permissions\n" +
+            "Set Camera to Allow\n\n" +
+            "Then reload the page."
+        );
         cameraWrapper.style.display = "none";
     }
 });
@@ -358,4 +387,5 @@ updateBtn.addEventListener("click", async () => {
     } finally {
         sessionStorage.setItem("loading_box", "hide");
     }
+
 });
