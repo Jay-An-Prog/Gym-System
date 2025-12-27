@@ -33,11 +33,11 @@ document.body.insertAdjacentHTML("beforeend", `
   </div>
 `);
 
-// Inject modal box html code
+// Inject modal box HTML (keep as-is)
 document.body.insertAdjacentHTML("beforeend", `
   <div id="modalBox" class="modal-box" style="display: none;">
     <div class="modal-container" id="modalContainer">
-      <img src="/assets/images/modal-symbol.png">
+      <img id="modalSymbol" src="">
       <p id="modalMessage">Please wait…</p>
     </div>
   </div>
@@ -102,3 +102,19 @@ createSessionBox({
     storageKey: "modal_box"
 
 });
+
+// Set the image src dynamically
+const modalImg = document.getElementById("modalSymbol");
+if (modalImg) {
+    // Use a function similar to redirectTo to build the path
+    function buildAssetPath(relativePath) {
+        const origin = window.location.origin;
+        const pathname = window.location.pathname;
+        const segments = pathname.split("/").filter(Boolean);
+        const base = (segments.length > 0 && segments[0] !== "pages") ? "/" + segments[0] : "";
+        return origin + base + relativePath;
+    }
+
+    modalImg.src = buildAssetPath("/assets/images/modal-symbol.png");
+}
+
