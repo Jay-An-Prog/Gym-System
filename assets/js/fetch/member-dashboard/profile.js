@@ -38,26 +38,12 @@ const uploadForm = document.getElementById("uploadForm");
 // ===================================================
 toggleCameraBtn.addEventListener("click", async () => {
     cameraWrapper.style.display = "flex";
-    // Detect permission state if supported
-    let permissionState = "unknown";
-    if (navigator.permissions && navigator.permissions.query) {
-        try {
-            const result = await navigator.permissions.query({ name: "camera" });
-            permissionState = result.state; // granted | unknown | prompt
-        } catch {}
-    }
-
-    // Show alert ONLY if camera is not yet granted
-    if (permissionState !== "granted") {
+    try {
         alert(
-            "This app needs access to your camera.\n\n" +
+            "This web needs access to your camera.\n\n" +
             "Please tap 'Allow' on the next prompt to continue.\n\n" +
             "If you block it, you will need to enable it manually in your phone or browser settings."
         );
-    }
-
-    // Attempt to access the camera (this triggers the browser prompt)
-    try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
         video.srcObject = stream;
     } catch (err) {
@@ -389,3 +375,4 @@ updateBtn.addEventListener("click", async () => {
     }
 
 });
+
