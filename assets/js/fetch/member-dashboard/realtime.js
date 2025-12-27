@@ -44,9 +44,12 @@ if (sessionStorage.getItem("qr_code")) {
     });
 }
 
+// Flag to let status initialized first before running updateUserInfo
+let isInitialized = false;
 // Run every 0.5s to check for updates
 setInterval(() => {
-    if (sessionStorage.getItem("needs_update") === "yes" && sessionStorage.getItem("loading_box") !== "show") {
+    if (sessionStorage.getItem("status")) isInitialized = true;
+    if (isInitialized && sessionStorage.getItem("needs_update") === "yes" && sessionStorage.getItem("loading_box") !== "show") {
         updateUserInfo();
     }
 }, 500);
@@ -148,5 +151,3 @@ if (navType === "reload") {
     sessionStorage.setItem("needs_update", "yes");
     sessionStorage.setItem("loading_box", "hide"); // Remove stuck up loading box bug
 }
-
-
