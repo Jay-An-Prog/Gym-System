@@ -37,6 +37,15 @@ const uploadForm = document.getElementById("uploadForm");
 // ✅ CAMERA TOGGLE + SELFIE CAPTURE
 // ===================================================
 toggleCameraBtn.addEventListener("click", async () => {
+    // Check if user is on in-app browser
+    function isInAppBrowser() {
+        return /FBAN|FBAV|Instagram|Messenger/i.test(navigator.userAgent);
+    }
+    if (isInAppBrowser()) {
+        modalMsg("Please open this page in your browser to enable camera access.");
+        return;
+    }
+    
     cameraWrapper.style.display = "flex";
     try {
         modalMsg(
@@ -381,4 +390,5 @@ updateBtn.addEventListener("click", async () => {
 function modalMsg(Msg) {
     sessionStorage.setItem("modal_box", "show")
     sessionStorage.setItem("modal_message", Msg)
+
 }
