@@ -25,29 +25,11 @@ async function loginWithGoogle() {
     try {
         await setPersistence(auth, browserLocalPersistence);
         const result = await signInWithPopup(auth, provider);
-        
-        if (result?.user) {
-            await handleUser(result.user);
-        }
+        await handleUser(result.user);
     } catch (error) {
-        // SILENTLY ABSORB RECOVERABLE SESSION ERRORS
-        if (isSilentAuthError(error)) {
-            console.warn("Silent Firebase auth state issue:", error.message);
-
-            // Reset UI quietly
-            sessionStorage.setItem("portal_loading_box", "hide");
-            return; // DO NOT show anything to user
-        }
-        // Real errors only
-        sessionStorage.setItem("portal_loading_box", "hide"); // hide AFTER request finishes
+        window.location.href = redirectTo("/pages/portal.html");
+        // Let console display after redirect
         console.error(error);
-    }
-
-    function isSilentAuthError(error) {
-        return (
-            error?.code === "auth/missing-initial-state" ||
-            error?.message?.includes("missing initial state")
-        );
     }
 }
 
@@ -111,7 +93,7 @@ async function handleUser(user) {
     sessionStorage.setItem("needs_update", "yes"); // Retrieve user info after signed in
     sessionStorage.setItem("portal_loading_box", "hide"); // hide AFTER request finishes
 
-    redirectTo("/pages/member-dashboard/profile.html");
+    window.location.href = redirectTo("/pages/member-dashboard/profile.html");
 }
 
 // REDIRECT HELPER
@@ -127,5 +109,5 @@ function redirectTo(path) {
     // Build final URL
     const redirectUrl = origin + base + path;
   
-    window.location.href = redirectUrl;
+    return redirectUrl;
 }
