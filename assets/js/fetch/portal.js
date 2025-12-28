@@ -1,6 +1,6 @@
 // portal.js
 import { auth, provider, db } from "../utils/firebase.js";
-import { setPersistence, browserLocalPersistence, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import { setPersistence, browserLocalPersistence, signInWithPopup, signInWithRedirect, getRedirectResult } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 
@@ -11,9 +11,26 @@ provider.setCustomParameters({
     prompt: "select_account"
 });
 
+// Detect in-app browsers (Messenger / FB / IG)
+function isInAppBrowser() {
+    return /FBAN|FBAV|Instagram|Messenger/i.test(navigator.userAgent);
+}
+
+// HANDLE REDIRECT RESULT (important for Messenger / mobile)
+window.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const result = await getRedirectResult(auth);
+        if (result?.user) {
+            await handleUser(result.user);
+        }
+    } catch (error) {
+        console.error("Redirect login error:", error);
+    }
+});
+
 // SECURE AUTO-LOGIN ON PAGE LOAD
 auth.onAuthStateChanged(async (user) => {
-    if (user) {
+    if (user && !sessionStorage.getItem("member_id")) {
         await handleUser(user);
     }
 });
@@ -24,12 +41,17 @@ document.getElementById("googleLoginBtn").addEventListener("click", loginWithGoo
 async function loginWithGoogle() {
     try {
         await setPersistence(auth, browserLocalPersistence);
-        const result = await signInWithPopup(auth, provider);
-        await handleUser(result.user);
+        // Use redirect for in-app browsers, popup otherwise
+        if (isInAppBrowser()) {
+            console.log("In-app browsers detected");
+            await signInWithRedirect(auth, provider);
+        } else {
+            console.log("Browser detected");
+            const result = await signInWithPopup(auth, provider);
+            await handleUser(result.user);
+        }
     } catch (error) {
-        window.location.href = redirectTo("/pages/portal.html");
-        // Let console display after redirect
-        console.error(error);
+        console.error("Google login error:", error);
     }
 }
 
