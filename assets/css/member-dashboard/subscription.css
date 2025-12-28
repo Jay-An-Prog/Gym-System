@@ -42,7 +42,7 @@
 .plan-box h3, p {
     padding: 4px 0;
 }
-button {
+.subs-content button {
     color: white;
     width: 165px;
     padding: 7px;
@@ -75,7 +75,7 @@ hr {
     .date-box p {
         font-size: 14px;
     }
-    .subs-content, .buttons-container {
+    .subs-content {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -83,11 +83,11 @@ hr {
     .subs-content p {
         font-size: 13px;
     }
-    hr {
-        width: 100%;
-    }
-    button {
+    .subs-content button {
         width: 128px;
         margin-top: 15px;
+    }
+    hr {
+        width: 100%;
     }
 }
