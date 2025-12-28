@@ -26,7 +26,7 @@ const generateBtn = document.getElementById("generateBtn");
 
 generateBtn.addEventListener("click", async () => {
     if (!sessionStorage.getItem("first_name")) {
-        amodalMsg("Kindly ensure that your details are uploaded first.");
+        modalMsg("Kindly ensure that your details are uploaded first.");
         return;
     }
 
@@ -46,7 +46,7 @@ generateBtn.addEventListener("click", async () => {
 
     try {
         if (sessionStorage.getItem("status") !== "activated") {
-            amodalMsg("Your information is under review. QR generation will be available after approval.");
+            modalMsg("Your information is under review. QR generation will be available after approval.");
             return;
         }
         // Define RTDB references here
@@ -104,4 +104,5 @@ generateBtn.addEventListener("click", async () => {
 function modalMsg(Msg) {
     sessionStorage.setItem("modal_box", "show")
     sessionStorage.setItem("modal_message", Msg)
+
 }
