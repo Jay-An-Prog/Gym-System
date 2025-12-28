@@ -2,7 +2,7 @@
 function isInAppBrowser() {
     return /FBAN|FBAV|Instagram|Messenger/i.test(navigator.userAgent);
 }
-if (!sessionStorage.getItem("dismiss_inapp_notice")) {
+if (isInAppBrowser() && !sessionStorage.getItem("dismiss_inapp_notice")) {
     document.body.insertAdjacentHTML("afterbegin", `
         <div id="inAppNotice">
             <span>
@@ -135,4 +135,5 @@ function redirectTo(path) {
     const redirectUrl = origin + base + path;
     
     return redirectUrl;
+
 }
