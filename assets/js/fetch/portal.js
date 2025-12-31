@@ -28,19 +28,15 @@ window.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
-const loginBtn = document.getElementById("googleLoginBtn");
 // SECURE AUTO-LOGIN ON PAGE LOAD
 auth.onAuthStateChanged(async (user) => {
     if (user) {
-        loginBtn.disabled = true;
         await handleUser(user);
-    } else {
-        loginBtn.disabled = false;
     }
 });
 
 // GOOGLE SIGN-IN BUTTON
-loginBtn.addEventListener("click", loginWithGoogle);
+document.getElementById("googleLoginBtn").addEventListener("click", loginWithGoogle);
 
 async function loginWithGoogle() {
     try {
@@ -134,4 +130,5 @@ function redirectTo(path) {
     const redirectUrl = origin + base + path;
   
     return redirectUrl;
+
 }
