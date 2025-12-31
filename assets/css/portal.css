@@ -84,15 +84,6 @@ button {/*specific*/
 button:hover {/*specific*/
     background: #0d7bc0;
 }
-button:disabled {
-    background: #a0c4e8; /* light blue-gray */
-    color: #ffffff;       /* keeps text readable */
-    cursor: not-allowed;
-    opacity: 0.7;         /* optional, subtle dim effect */
-}
-button:disabled img {
-    opacity: 0.5;         /* optional, subtle dim effect */
-}
 label {/*specific*/
     color: white;
 }
@@ -154,4 +145,5 @@ p {/*specific*/
     .container {
         width: 290px;
     }
+
 }
