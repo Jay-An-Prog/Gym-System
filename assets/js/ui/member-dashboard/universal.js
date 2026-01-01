@@ -57,7 +57,6 @@ document.body.insertAdjacentHTML("beforeend", `
     <div id="modalBox" class="modal-box" style="display: none;">
         <div class="modal-container" id="modalContainer">
             <img id="modalSymbol" src="">
-            <hr>
             <p id="modalMessage">Please wait…</p>
             <div class="modal-btn-wrapper">
                 <button class="modal-ok" id="modalOk">OK</button>
@@ -190,4 +189,5 @@ function redirectTo(path) {
     return redirectUrl;
 
 }
+
 
