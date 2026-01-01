@@ -160,7 +160,7 @@ button[type="submit"], .update-button {
     padding: 10px;
     background: #007bff;
     color: #fff;
-    font-size: 16px;
+    font-weight: bold;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -267,3 +267,4 @@ canvas {
         height: 250px;
     }
 }
+
