@@ -204,6 +204,7 @@ function canvasHasImage(canvas) {
 // ==============================
 // 🧠 SHARED FORM DATA COLLECTOR
 // ==============================
+const form = document.getElementById("uploadForm");
 function getFormData(form) {
     return {
         phone_number: "#" + form.phone_number.value,
@@ -379,4 +380,5 @@ updateBtn.addEventListener("click", async () => {
     } finally {
         sessionStorage.setItem("loading_box", "hide");
     }
+
 });
