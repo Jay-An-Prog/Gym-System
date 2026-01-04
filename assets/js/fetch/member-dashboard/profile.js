@@ -323,36 +323,51 @@ uploadForm.addEventListener("submit", async (e) => {
     const confirm = await modalConfirm("Please review your information carefully before submitting.");
     if (!confirm) return;
 
+    let uploadedFiles = null;
+
     try {
-        modalMsg("Submitting info...");
+        await modalMsg("Submitting info...");
         sessionStorage.setItem("loading_box", "show");
 
-        const { faceFileId, idFileId, faceImageURL } = await uploadImages();
+        // PHASE 1: Upload files
+        uploadedFiles = await uploadImages();
 
+        // PHASE 2: Write Firestore
         await updateFirestore({
             ...getFormData(uploadForm),
             first_name: form.first_name.value,
             middle_name: form.middle_name.value,
             last_name: form.last_name.value,
-            face_file_id: faceFileId,
-            face_image_url: faceImageURL,
-            id_file_id: idFileId
+            face_file_id: uploadedFiles.faceFileId,
+            face_image_url: uploadedFiles.faceImageURL,
+            id_file_id: uploadedFiles.idFileId
         });
 
-        // Upload in realtime database
+        // PHASE 3: RTDB (only after Firestore success)
         const memberId = sessionStorage.getItem("member_id");
-        const statusRef = ref(rtdb, `member_status/${memberId}/status`);
-        await set(statusRef, "pending");
-
-        sessionStorage.setItem("face_file_id", faceFileId);
-        sessionStorage.setItem("id_file_id", idFileId);
+        await set(ref(rtdb, `member_status/${memberId}/status`), "pending");
 
         modalMsg("Upload successful!");
         modalMsg("Your account is under review!");
 
     } catch (err) {
         console.error(err);
-        modalMsg("Upload failed.");
+
+        // ROLLBACK IF FIRESTORE FAILED
+        if (uploadedFiles) {
+            try {
+                if (uploadedFiles.faceFileId) {
+                    await storage.deleteFile(BUCKET_ID, uploadedFiles.faceFileId);
+                }
+                if (uploadedFiles.idFileId) {
+                    await storage.deleteFile(BUCKET_ID, uploadedFiles.idFileId);
+                }
+            } catch (rollbackErr) {
+                console.warn("Rollback failed:", rollbackErr);
+            }
+        }
+        modalMsg("Upload failed. No data was saved.");
+
     } finally {
         sessionStorage.setItem("loading_box", "hide");
     }
@@ -380,5 +395,4 @@ updateBtn.addEventListener("click", async () => {
     } finally {
         sessionStorage.setItem("loading_box", "hide");
     }
-
 });
