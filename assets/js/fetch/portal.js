@@ -113,7 +113,7 @@ async function handleUser(user) {
     sessionStorage.setItem("needs_update", "yes"); // Retrieve user info after signed in
     sessionStorage.setItem("portal_loading_box", "hide"); // hide AFTER request finishes
 
-    window.location.href = redirectTo("/pages/member-dashboard/profile.html");
+    window.location.href = "./pages/member-dashboard/profile.html";
 }
 
 // REDIRECT HELPER
@@ -130,4 +130,5 @@ function redirectTo(path) {
     const redirectUrl = origin + base + path;
   
     return redirectUrl;
+
 }
