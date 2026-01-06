@@ -50,7 +50,6 @@ body::before {/*General*/
 }
 .gym-logoname h2 {
     font-size: 20px;
-    margin-top: 8px;
     color: white;
 }
 .gym-logoname img {
@@ -88,9 +87,11 @@ label {/*specific*/
     color: white;
 }
 a {/*specific*/
+    position: absolute;
+    bottom: 50px;
     text-decoration: none;
     text-shadow: #24A0ED;
-    color: #24A0ED;
+    color: white;
     cursor: pointer;
 }
 p {/*specific*/
