@@ -30,7 +30,6 @@ body::before {/*General*/
 }
 .container {/*specific*/
     position: absolute;
-    transform: translateX(-50%);
     top: 35%;
     width: 380px;
     min-height: 60px; /* This ensures a baseline size but still allows the box to expand if needed */
