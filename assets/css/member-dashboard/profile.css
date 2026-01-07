@@ -164,7 +164,7 @@ button[type="submit"], .update-button {
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: 0.2s;
+    transition: 0.2s ease;
 }
 button[type="submit"]:hover, .update-button:hover {
     background: #0056b3;
@@ -182,6 +182,10 @@ button[type="submit"]:hover, .update-button:hover {
     font-weight: bold;
     border-radius: 6px;
     cursor: pointer;
+    transition: 0.2s ease;
+}
+#toggleCamera:hover {
+    background: #307e34;
 }
 #cameraWrapper {
     position: fixed;
@@ -267,4 +271,3 @@ canvas {
         height: 250px;
     }
 }
-
