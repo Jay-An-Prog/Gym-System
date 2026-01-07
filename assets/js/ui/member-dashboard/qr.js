@@ -120,7 +120,7 @@ async function choose(option) {
         // Add special class for download
         idFormatDownload();
         
-        html2canvas(idCard, { scale: 2 })
+        html2canvas(idCard, { scale: 3 })
         .then(canvas => {
             // Create a download link
             const link = document.createElement("a");
@@ -155,7 +155,7 @@ async function choose(option) {
         html2canvas(idCard, {
             width: width,       // desktop width
             height: height,     // desktop height
-            scale: 1            // preserve exact size
+            scale: 3            // preserve exact size
         }).then(canvas => {
             const imgData = canvas.toDataURL("image/png");
             
