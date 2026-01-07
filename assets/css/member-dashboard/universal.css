@@ -256,12 +256,21 @@ a {
     border-radius: 8px;
     cursor: pointer;
     color: #fff;
+    transition: 0.2s ease;
 }
 .modal-container .modal-ok {
     background: #007bff;
 }
+.modal-container .modal-ok:hover {
+    background: #0069d9;
+}
 .modal-container .modal-cancel {
-    background: #dc3545;
+    border: 1px solid #007bff;
+    color: #007bff;
+    background: #fff;
+}
+.modal-container .modal-cancel:hover {
+    background: #f0f6ff;
 }
 @keyframes modalFadeIn {
     from {
