@@ -26,6 +26,7 @@
     margin-bottom: 4px;
 }
 .qr-wrapper {
+    display: block; /* Images are inline elements by default and can create tiny layout gaps */
     width: 100%;
     max-width: 120px; /* keeps it from getting too big */
     height: auto;
@@ -33,6 +34,7 @@
     padding: 18px;
     border: 1px solid black;
     border-radius: 8px; 
+    image-rendering: crisp-edges;
 }
 .member-details {
     margin-top: 20px;
@@ -164,7 +166,11 @@
     font-size: 7px;
 }
 .qr-wrapper-download {
-    max-width: 100px;
+    width: 100px;
+    height: 100px;
+    padding: 15px;
+    image-rendering: crisp-edges;
+    background: #fff;
 }
 .member-details-download {
     padding: 8px;
