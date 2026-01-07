@@ -48,6 +48,7 @@
     padding: 7px;
     border: none;
     border-radius: 7px;
+    transition: 0.2s ease;
 }
 #monthlyBtn {
     background: rgb(0, 183, 255);
