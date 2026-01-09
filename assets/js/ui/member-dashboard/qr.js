@@ -60,20 +60,7 @@ function updater() {
             document.getElementById("idHeader").classList.remove("active-id-header");
             document.getElementById("memberDetails").classList.remove("active-member-details");
         }
-
-        const resetTim = sessionStorage.getItem("qr_checkin");
-        if (!resetTim) { // safety check
-            // expired → hide UI
-            document.getElementById("checkinSection").classList.remove("active-checkin-section");
-        } else {
-            const timeCheckedin = new Date(resetTim);        
-            // still valid → show UI
-            document.getElementById("checkinSection").classList.add("active-checkin-section");
-        
-            // Show check-in time only
-            const formattedTime = timeCheckedin.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit',  second: '2-digit' });
-            document.getElementById("checkinTime").textContent = formattedTime;
-        }       
+       
     } else {
         if (document.getElementById("idName").textContent !== "User full name")
             document.getElementById("idName").textContent = "User full name";
@@ -96,6 +83,22 @@ function updater() {
 updater();
 // Then run every 5 seconds
 setInterval(updater, 5000);
+
+setInterval(() => {
+    const resetTim = sessionStorage.getItem("qr_checkin");
+    if (!resetTim) { // safety check
+        // expired → hide UI
+        document.getElementById("checkinSection").classList.remove("active-checkin-section");
+    } else {
+        const timeCheckedin = new Date(resetTim);        
+        // still valid → show UI
+        document.getElementById("checkinSection").classList.add("active-checkin-section");
+        
+        // Show check-in time only
+        const formattedTime = timeCheckedin.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit',  second: '2-digit' });
+        document.getElementById("checkinTime").textContent = formattedTime;
+    }
+}, 500);
 
 
 function downloadBtn() {
