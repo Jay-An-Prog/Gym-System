@@ -54,8 +54,10 @@ function updater() {
         }
         
         if (sessionStorage.getItem("subscription_status") === "active") {
+            document.getElementById("idHeader").classList.add("active-id-header");
             document.getElementById("memberDetails").classList.add("active-member-details");
         } else {
+            document.getElementById("idHeader").classList.remove("active-id-header");
             document.getElementById("memberDetails").classList.remove("active-member-details");
         }
 
@@ -86,6 +88,7 @@ function updater() {
             qrImg.removeAttribute("src");       // remove the current QR image
             delete qrImg.dataset.qrValue;       // clear cached QR value
         }
+        document.getElementById("idHeader").classList.remove("active-id-header");
         document.getElementById("memberDetails").classList.remove("active-member-details"); // A safety to remove active member class
     }
 }
