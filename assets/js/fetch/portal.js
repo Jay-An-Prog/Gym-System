@@ -69,6 +69,8 @@ async function loginWithGoogle() {
 // HANDLE USER AFTER LOGIN
 async function handleUser(user) {
     btnText.textContent = "Signed in";
+    btn.disabled = true; // Lock google button
+    
     sessionStorage.setItem("portal_loading_box", "show"); // Show loading box
 
     const email = user.email;
@@ -145,3 +147,4 @@ function redirectTo(path) {
   
     return redirectUrl;
 }
+
