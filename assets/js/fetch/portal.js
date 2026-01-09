@@ -25,6 +25,7 @@ btn.disabled = true;
 // HANDLE REDIRECT RESULT (important for Messenger / mobile)
 let redirectHandled = false; // Flag
 window.addEventListener("DOMContentLoaded", async () => {
+    btnText.textContent = "Checking account...";
     try {
         const result = await getRedirectResult(auth);
         if (result?.user) {
@@ -38,12 +39,10 @@ window.addEventListener("DOMContentLoaded", async () => {
 
 // SECURE AUTO-LOGIN ON PAGE LOAD
 auth.onAuthStateChanged(async (user) => {
-    btnText.textContent = "Checking account...";
     if (user && !redirectHandled) {
         // only run if redirect result didn't already handle it
-        btnText.textContent = "Signed in";
         await handleUser(user);
-    } else if (!user) {
+    } else {
         btnText.textContent = "Sign in with Google";
         btn.disabled = false;
     }
@@ -52,6 +51,7 @@ auth.onAuthStateChanged(async (user) => {
 btn.addEventListener("click", loginWithGoogle);
 
 async function loginWithGoogle() {
+    redirectHandled = true;  // mark handled, prevent running onAuthStateChanged twice
     try {
         await setPersistence(auth, browserLocalPersistence);
         // Use redirect for in-app browsers, popup otherwise
@@ -68,6 +68,7 @@ async function loginWithGoogle() {
 
 // HANDLE USER AFTER LOGIN
 async function handleUser(user) {
+    btnText.textContent = "Signed in";
     sessionStorage.setItem("portal_loading_box", "show"); // Show loading box
 
     const email = user.email;
