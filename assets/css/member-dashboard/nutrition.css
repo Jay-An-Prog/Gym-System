@@ -167,3 +167,13 @@ select:focus:invalid {
     font-size: 0.75rem;
     color: #666;
 }
+
+/* Mobile */
+@media (max-width: 768px) {
+    .status-wrapper p {
+        font-size: 12px;
+    }
+    .hint-msg {
+        font-size: 10px;
+    }
+}
