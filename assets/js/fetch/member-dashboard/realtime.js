@@ -10,17 +10,31 @@ import { getDatabase, ref as rtdbRef, onValue, get } from "https://www.gstatic.c
 const memberId = sessionStorage.getItem("member_id");
 const rtdb = getDatabase(); // Realtime DB reference
 
+const currentPage = window.location.pathname.split("/").pop();
+const isInQRPage = currentPage === "qr.html";
+
+let qrListenerAttached = false;
+
 // Listen for real-time status changes
 if (memberId) {
     const statusRef = rtdbRef(rtdb, `member_status/${memberId}/status`);
     onValue(statusRef, (snapshot) => {
         if (!snapshot.exists()) return;
-
-        sessionStorage.setItem("status", (snapshot.val() || "").toString().trim());
+        
+        const status = snapshot.val()?.toString().trim();
+        sessionStorage.setItem("status", status);
         console.log("Realtime status updated:", sessionStorage.getItem("status"));
-
-        if (sessionStorage.getItem("qr_code") && sessionStorage.getItem("status") === "activated" && sessionStorage.getItem("subscription_status") === "active") 
+        
+        if (
+            isInQRPage &&
+            !qrListenerAttached &&
+            status === "activated" &&
+            sessionStorage.getItem("subscription_status") === "active" &&
+            sessionStorage.getItem("qr_code")
+        ) {
+            qrListenerAttached = true;
             initializeQrCheckinRT();
+        }
     });
 }
 function initializeQrCheckinRT() {
