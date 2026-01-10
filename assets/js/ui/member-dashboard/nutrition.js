@@ -33,7 +33,7 @@ function nutritionUpdater() {
             case "":
             default:
                 statusNotice.textContent = "Nutrition tracking is unavailable. Please complete your account setup to get started.";
-                statusNotice.className = "status-notice"; // reset CSS style
+                statusNotice.classList.add("status-pending"); // reset CSS style
                 statusNotice.style.display = "block";     // make sure message is visible
                 break;
         }
@@ -75,25 +75,12 @@ function nutritionUpdater() {
             if (document.getElementById("nutritionLastUpdate").textContent !== `Last updated: ${formatted}`)
                 document.getElementById("nutritionLastUpdate").textContent = `Last updated: ${formatted}`;
         }
-
-        document.getElementById("sex").disabled = false;
-        document.getElementById("age").disabled = false;
-        document.getElementById("height").disabled = false;
-        document.getElementById("weight").disabled = false;
-        document.getElementById("activity").disabled = false;
-        document.getElementById("goal").disabled = false;
     } else {
         document.getElementById("statusWrapper").classList.add("status-wrapper-hide"); // Prevents taking up space between user name & member id and status notice when hide
         statusNotice.textContent = "";
         statusNotice.className = "status-notice"; // reset CSS style of status notice box
         document.getElementById("nutritionForm").style.display = "grid"; // Display upload form again when the condition are not met
-        
-        document.getElementById("sex").disabled = true;
-        document.getElementById("age").disabled = true;
-        document.getElementById("height").disabled = true;
-        document.getElementById("weight").disabled = true;
-        document.getElementById("activity").disabled = true;
-        document.getElementById("goal").disabled = true;
+        document.getElementById("nutritionResult").style.display = "none";
     }
 }
 
