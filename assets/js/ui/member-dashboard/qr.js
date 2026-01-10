@@ -86,10 +86,7 @@ setInterval(updater, 5000);
 
 setInterval(() => {
     const resetTim = sessionStorage.getItem("qr_checkin");
-    if (!resetTim) { // safety check
-        // expired → hide UI
-        document.getElementById("checkinSection").classList.remove("active-checkin-section");
-    } else {
+    if (resetTim && sessionStorage.getItem("status") === "activated" && sessionStorage.getItem("subscription_status") === "active") { // safety check
         const timeCheckedin = new Date(resetTim);        
         // still valid → show UI
         document.getElementById("checkinSection").classList.add("active-checkin-section");
@@ -97,6 +94,9 @@ setInterval(() => {
         // Show check-in time only
         const formattedTime = timeCheckedin.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit',  second: '2-digit' });
         document.getElementById("checkinTime").textContent = formattedTime;
+    } else {
+        // expired → hide UI
+        document.getElementById("checkinSection").classList.remove("active-checkin-section");
     }
 }, 500);
 
@@ -227,3 +227,4 @@ optionBox.addEventListener("click", function(event) {
     optionBox.style.display = "none";
   }
 });
+
