@@ -166,12 +166,20 @@ async function updateUserInfo() {
 
 function clearUserSession() {
     sessionStorage.removeItem("face_image_url");
+    sessionStorage.removeItem("subscription_status");
+    sessionStorage.removeItem("plan");
+    sessionStorage.removeItem("expiration_date");
+    sessionStorage.removeItem("qr_checkin");
     sessionStorage.removeItem("qr_code");
     sessionStorage.removeItem("id_name");
-    sessionStorage.removeItem("subscription_status");
-    sessionStorage.removeItem("expiration_date");
-    sessionStorage.removeItem("plan");
-    sessionStorage.removeItem("qr_checkin");
+
+    sessionStorage.removeItem("activity");
+    sessionStorage.removeItem("age");
+    sessionStorage.removeItem("weight");
+    sessionStorage.removeItem("sex");
+    sessionStorage.removeItem("protein_target");
+    sessionStorage.removeItem("nutrition_goal");
+    sessionStorage.removeItem("nutrition_last_update");
 }
 
 // Reload page to trigger updateUserInfo
