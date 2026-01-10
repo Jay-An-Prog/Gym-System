@@ -65,9 +65,9 @@
 
 /* Labels */
 .nutrition-form label {
-    font-size: 0.85rem;
-    font-weight: 600;
     margin-bottom: 0.3rem;
+    font-size: 14px;
+    font-weight: 600;
     color: #333;
 }
 
@@ -120,7 +120,7 @@ select:focus:invalid {
 /* Calculate button */
 .nutrition-form .primary-btn {
     grid-column: 1 / -1;
-    margin-top: 0.5rem;
+    margin-top: 1.4rem;
     padding: 10px;
     background: #007bff;
     color: #fff;
@@ -170,10 +170,19 @@ select:focus:invalid {
 
 /* Mobile */
 @media (max-width: 768px) {
+    .section > p:first-of-type {
+        font-size: 14px;
+    }
+    .nutrition-form label {
+        font-size: 12px;
+    }
     .status-wrapper p {
         font-size: 12px;
     }
     .hint-msg {
         font-size: 10px;
+    }
+    input, select {
+        font-size: 13px;
     }
 }
