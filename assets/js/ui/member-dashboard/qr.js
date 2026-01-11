@@ -1,24 +1,30 @@
+let lastFaceImageUrl = null;
+
 function updater() {
     const qrImg = document.getElementById("qrWrapper");
+
     if (sessionStorage.getItem("id_name") && sessionStorage.getItem("phone_number") && 
         sessionStorage.getItem("user_address") && sessionStorage.getItem("status") === "activated") { // Check if the current card is valid to update the UI
         // Show and render profile image so it can be viewed, manipulated by js like download, and print.
-        window.addEventListener("DOMContentLoaded", async () => {
+        // Profile image update wrapped in anonymous async function
+        (async () => {
             const url = sessionStorage.getItem("face_image_url");
-            if (!url) return;
-            
+            if (!url || url === lastFaceImageUrl) return; // guard
+
+            lastFaceImageUrl = url; // update tracker
+
             try {
-                const response = await fetch(url, { mode: 'cors' }); // fetch the image
+                const response = await fetch(url, { mode: 'cors' });
                 const blob = await response.blob();
                 const reader = new FileReader();
                 reader.onload = function() {
-                    document.getElementById("defaultPic").src = reader.result; // set as data URL
+                    document.getElementById("defaultPic").src = reader.result;
                 };
                 reader.readAsDataURL(blob);
             } catch (err) {
                 console.error("Failed to load image for ID card:", err);
             }
-        });
+        })(); // <-- immediately invoked
             
         if (document.getElementById("idName").textContent !== sessionStorage.getItem("id_name"))
             document.getElementById("idName").textContent = sessionStorage.getItem("id_name");
