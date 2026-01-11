@@ -1,8 +1,11 @@
 ///////////////// Marks the session storage
 ///////////////// Static Info
 window.addEventListener("DOMContentLoaded", () => {
-    if (sessionStorage.getItem("user_photo"))
+    if (sessionStorage.getItem("status") === "activated" && sessionStorage.getItem("face_image_url")) {
+        document.getElementById("profileImage").src = sessionStorage.getItem("face_image_url");
+    } else if (sessionStorage.getItem("user_photo")) {
         document.getElementById("profileImage").src = sessionStorage.getItem("user_photo");
+    }
 });
 
 // Auto formatting (Capitalize). "Blur" activates when user left the input field
@@ -193,4 +196,5 @@ function hideForm() {
     document.getElementById("hideInfo").style.display = "none";
     document.getElementById("uploadForm").style.display = "none";
     sessionStorage.setItem("profile_update", "yes");
+
 }
