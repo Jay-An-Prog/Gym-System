@@ -1,12 +1,5 @@
 ///////////////// Marks the session storage
 ///////////////// Static Info
-window.addEventListener("DOMContentLoaded", () => {
-    if (sessionStorage.getItem("status") === "activated" && sessionStorage.getItem("face_image_url")) {
-        document.getElementById("profileImage").src = sessionStorage.getItem("face_image_url");
-    } else if (sessionStorage.getItem("user_photo")) {
-        document.getElementById("profileImage").src = sessionStorage.getItem("user_photo");
-    }
-});
 
 // Auto formatting (Capitalize). "Blur" activates when user left the input field
 function capitalizeName(input) {
@@ -83,7 +76,22 @@ setupFileInput("id", "idPreview");
 
 sessionStorage.setItem("profile_update", "yes"); // Declare for auto update
 
+let lastProfileImage = null;
+
 function updater() {
+    let newImage = null;
+
+    if (sessionStorage.getItem("status") === "activated" && sessionStorage.getItem("face_image_url")) {
+        newImage = sessionStorage.getItem("face_image_url");
+    } else if (sessionStorage.getItem("user_photo")) {
+        newImage = sessionStorage.getItem("user_photo");
+    }
+    // Only update if the image is different
+    if (newImage && newImage !== lastProfileImage) {
+        document.getElementById("profileImage").src = newImage;
+        lastProfileImage = newImage; // update the tracker
+    }
+
     // Update the username to firstname if only changes and firstname is true (should always run)
     if (sessionStorage.getItem("first_name")) {
         if (document.getElementById("welcome").textContent !== "Welcome, " + sessionStorage.getItem("first_name") + "!") 
@@ -196,5 +204,4 @@ function hideForm() {
     document.getElementById("hideInfo").style.display = "none";
     document.getElementById("uploadForm").style.display = "none";
     sessionStorage.setItem("profile_update", "yes");
-
 }
