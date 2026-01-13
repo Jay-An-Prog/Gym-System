@@ -3,48 +3,61 @@ import { doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs
 
 // CALCULATE + SAVE
 document.getElementById("calculateBtn").addEventListener("click", async () => {
-    const sex = document.getElementById("sex").value;
-    const age = parseFloat(document.getElementById("age").value);
-    const height = parseFloat(document.getElementById("height").value);
-    const weight = parseFloat(document.getElementById("weight").value);
-    const activity = parseFloat(document.getElementById("activity").value);
-    const goal = document.getElementById("goal").value;
 
-    if (!sex || !age || !height || !weight || !activity || !goal) {
-        modalMsg("Please fill in all fields.");
+    // Holds the latest calculated values for optional saving
+    let caloriesTarget, proteinTarget, age, height, weight, activity, sex, goal;
+
+    function calculateUserInput() {
+        sex = document.getElementById("sex").value;
+        age = parseFloat(document.getElementById("age").value);
+        height = parseFloat(document.getElementById("height").value);
+        weight = parseFloat(document.getElementById("weight").value);
+        activity = parseFloat(document.getElementById("activity").value);
+        goal = document.getElementById("goal").value;
+        
+        if (!sex || !age || !height || !weight || !activity || !goal) {
+            modalMsg("Please fill in all fields.");
+            return false;
+        }
+        
+        // 1 Calculate BMR
+        let bmr = sex === "male"
+            ? (10 * weight) + (6.25 * height) - (5 * age) + 5
+            : (10 * weight) + (6.25 * height) - (5 * age) - 161;
+        
+        // 2 Total Daily Energy Expenditure
+        let tdee = bmr * activity;
+        
+        // 3 Adjust for goal
+        caloriesTarget = goal === "lose" ? tdee - 500
+            : goal === "gain" ? tdee + 300
+            : tdee;
+        
+        // 4 Protein target
+        let proteinPerKg = goal === "gain" ? 2.0
+            : goal === "lose" ? 1.8
+            : 1.6;
+
+        proteinTarget = weight * proteinPerKg;
+        
+        // 5 Update UI
+        document.getElementById("caloriesResult").innerText = Math.round(caloriesTarget);
+        document.getElementById("proteinResult").innerText = Math.round(proteinTarget);
+        document.getElementById("nutritionResult").style.display = "block";
+    }
+
+    // Skip confirmation & persistence when account is not activated
+    if (sessionStorage.getItem("status") !== "activated") {
+        calculateUserInput();
         return;
     }
 
-    // 1 Calculate BMR
-    let bmr = sex === "male"
-        ? (10 * weight) + (6.25 * height) - (5 * age) + 5
-        : (10 * weight) + (6.25 * height) - (5 * age) - 161;
-
-    // 2 Total Daily Energy Expenditure
-    let tdee = bmr * activity;
-
-    // 3 Adjust for goal
-    let caloriesTarget = goal === "lose" ? tdee - 500
-                     : goal === "gain" ? tdee + 300
-                     : tdee;
-
-    // 4 Protein target
-    let proteinPerKg = goal === "gain" ? 2.0
-                     : goal === "lose" ? 1.8
-                     : 1.6;
-    let proteinTarget = weight * proteinPerKg;
-
-    // 5 Update UI
-    document.getElementById("caloriesResult").innerText = Math.round(caloriesTarget);
-    document.getElementById("proteinResult").innerText = Math.round(proteinTarget);
-    document.getElementById("nutritionResult").style.display = "block";
-
     if (!sessionStorage.getItem("first_name")) return;
-    
-    if (sessionStorage.getItem("status") !== "activated") return;
 
     const confirm = await modalConfirm("Confirm to save your nutrition calculation for your profile.");
     if (!confirm) return;
+
+    calculateUserInput();
 
     // 6 Save to Firestore
     const memberId = sessionStorage.getItem("member_id");
