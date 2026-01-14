@@ -230,11 +230,14 @@ a {
 #modalMessage {
     color: #000000;
     font-size: 12px;
-    text-align: left; /* keep text left-aligned */
+    width: 100%; /* Fix the issue where shorter message won't center
     margin: 0;        /* remove default p margin */
     line-height: 1.4;
     white-space: pre-wrap; /* preserves \n line breaks */
     word-wrap: break-word; /* wrap long lines */
+}
+.modal-short-message {
+    text-align: center;
 }
 /* modal button wrapper */
 .modal-btn-wrapper {
