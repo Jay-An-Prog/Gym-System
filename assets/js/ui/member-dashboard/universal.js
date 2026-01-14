@@ -86,6 +86,9 @@ function closeModal() {
 }
 
 function openModal(msg, isConfirm = false) {
+    modalMessage.classList.remove("modal-short-message"); // just cleanup
+    if (msg.length < 35) modalMessage.classList.add("modal-short-message");
+
     modalIsConfirm = isConfirm;
 
     sessionStorage.setItem("modal_box", "show");
@@ -157,7 +160,7 @@ function createSessionBox({
     setInterval(() => {
         if (sessionStorage.getItem(storageKey) === "show") {
             start();
-            document.getElementById("modalMessage").textContent = sessionStorage.getItem("modal_message");
+            modalMessage.textContent = sessionStorage.getItem("modal_message");
         }
     }, pollInterval);
 }
