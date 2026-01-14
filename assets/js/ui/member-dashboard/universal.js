@@ -86,8 +86,7 @@ function closeModal() {
 }
 
 function openModal(msg, isConfirm = false) {
-    modalMessage.classList.remove("modal-short-message"); // just cleanup
-    if (msg.length <= 42) modalMessage.classList.add("modal-short-message");
+    msg.length <= 42 ? modalMessage.classList.add("modal-short-message") : modalMessage.classList.remove("modal-short-message");
 
     modalIsConfirm = isConfirm;
 
@@ -192,4 +191,5 @@ function redirectTo(path) {
     
     return redirectUrl;
 }
+
 
