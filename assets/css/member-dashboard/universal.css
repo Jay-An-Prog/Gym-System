@@ -1,0 +1,386 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/*General*/
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body {
+    height: 100vh;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.6;
+}
+body {
+    display: flex;  
+    height: 100vh;
+    position: relative; /*must for 'before with absolute position*/
+    background: #f4f4f4; 
+} 
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../../images/gym-background.jpg') center/cover no-repeat;
+    filter: brightness(40%);
+    z-index: -1;
+    pointer-events: none;
+}
+.gym-logoname {
+    background: rgba(0, 0, 0, 0.767);
+    display: flex;
+    align-items: center;
+}
+.gym-logoname img {
+    width: 50px;
+    height: 50px;
+    margin-left: 10px;
+}
+.sidebar {
+    width: 260px;
+    height: 100vh;              /* full screen height */
+    background: #2c3e50;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Clip the <a>'s extra on sidebar boundary */
+    transition: left 0.3s;
+    z-index: 10; /* above page wrapper */
+}
+.sidebar h2 {
+    margin: 28px 4px 28px;
+    font-size: 25px;
+}
+.sidebar ul {
+    padding: 0;
+    margin: 12px 0 0; /* Make sure the ui box top has margin (top of profile) */
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.sidebar li {
+    list-style: none;
+    margin: 2px 10px;
+    padding: 8px;
+    cursor: pointer;
+}
+.sidebar li:last-child {
+    margin-top: auto;
+}
+.sidebar ul li:hover { 
+    border-radius: 10px;
+    background: #4f5d6b; 
+}
+.sidebar a {
+    position: relative; /* anchor for ::before */ 
+    font-size: 16px;
+    color: white;
+}
+.sidebar a::before { /* Bug patched when only profile page has sliding section */
+    content: "";
+    position: absolute;
+    top: -10px;   /* expand clickable area */
+    left: -20px;
+    right: -155px;
+    bottom: -10px; 
+}
+.sidebar ul li a {
+    display: flex;
+    align-items: center;      /* vertical centering */
+    text-decoration: none;
+    color: #fff;
+}
+.sidebar .icon {
+    width: 15px;
+    height: 15px;
+    margin-right: 15px;
+    object-fit: contain;
+    filter: invert(1);
+}
+/* Highlight sidebar when chosen by user */
+.sidebar ul li.active {
+    border-radius: 10px;
+    background: rgba(250, 204, 21, 0.15);
+}
+.sidebar ul li.active a {
+    color: #facc15;
+}
+.sidebar ul li.active .icon {
+    filter: brightness(10) invert(1) sepia(1) saturate(1000%) hue-rotate(5deg);
+}
+.page-wrapper {
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(0, 0, 0, 0.5); /* dim background */
+    z-index: 8; /* Below sidebar */
+}
+/* activate background event click */
+.page-wrapper-active {
+    display: block;
+}
+.main {
+    flex: 1; 
+    padding: 30px; 
+    position: relative;
+    overflow-y: auto; 
+} 
+.section {
+    background: #FFFFF0; 
+    opacity: 95%; 
+    border-radius: 10px; 
+    padding: 20px; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+}
+a {
+    text-decoration: none; 
+}
+
+/* floating sidebar for mobile */
+/* Burger button */
+.burger {
+    display: none; /* hidden by default */
+    font-size: 15px;
+    padding: 12px;
+    cursor: pointer;
+    background: #2c3e50;
+    color: white;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    border-radius: 5px;
+    z-index: 1800;
+}
+
+/* In-app notice */
+#inAppNotice {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    pointer-events: none; /* allow clicks to pass through */
+}
+#inAppNotice span {
+    display: flex;
+    gap: 12px;
+    padding: 10px 14px;
+    margin: 8px;
+    border-radius: 8px;
+    line-height: 1.4;
+    color: #fff;
+    background: rgba(30, 30, 30, 0.95);
+}
+#inAppNotice button {
+    border: none; 
+    font-size: 16px;
+    cursor: pointer;
+    pointer-events: auto; /* clickable only here */
+    opacity: 0.7;
+    color: #fff;
+    background: transparent;
+}
+#inAppNotice button:hover {
+    opacity: 1;
+}
+
+/* Modal Box */
+.modal-box {
+    position: fixed;
+    inset: 0; /* top:0; right:0; bottom:0; left:0 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(3px);
+    z-index: 9999;
+}
+/* Modal Content Container */
+.modal-container {
+    width: 260px;
+    display: flex;
+    flex-direction: column; /* stack image on top of text */
+    align-items: flex-start; /* align everything to the left */
+    gap: 10px;              /* space between image and text */
+    background: #ffffff;
+    padding: 20px 28px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+/* Image */
+.modal-container img {
+    display: block;       /* makes the image a block element */
+    margin: 0 auto;       /* centers horizontally */
+    width: 25px;  /* slightly bigger for top placement */
+    height: 25px;
+    object-fit: contain;
+}
+/* Text */
+#modalMessage {
+    color: #000000;
+    font-size: 12px;
+    width: 100%; /* Fix the issue where shorter message won't center
+    margin: 0;        /* remove default p margin */
+    line-height: 1.4;
+    white-space: pre-wrap; /* preserves \n line breaks */
+    word-wrap: break-word; /* wrap long lines */
+}
+.modal-short-message {
+    text-align: center;
+}
+/* modal button wrapper */
+.modal-btn-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* centers the button inside the wrapper */
+    gap: 8px;
+}
+/* fade animation */
+.modal-container {
+    animation: modalFadeIn 0.2s ease-out;
+}
+/* modal button */
+.modal-container button {
+    max-width: 250px;
+    width: 100%;
+    margin-top: 10px;
+    padding: 5px 8px;
+    font-size: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    transition: 0.2s ease;
+}
+.modal-container .modal-ok {
+    background: #007bff;
+}
+.modal-container .modal-ok:hover {
+    background: #0069d9;
+}
+.modal-container .modal-cancel {
+    border: 1px solid #007bff;
+    color: #007bff;
+    background: #fff;
+}
+.modal-container .modal-cancel:hover {
+    background: #f0f6ff;
+}
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Loading Box */
+.loading {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  z-index: 9999;
+}
+/* Spinner animation */
+.spinner {
+  width: 40px;
+  aspect-ratio: 1;
+  --c: linear-gradient(rgb(42, 170, 255) 0 0);
+  --r1: radial-gradient(farthest-side at bottom,rgb(42, 170, 255) 93%,#0000);
+  --r2: radial-gradient(farthest-side at top   ,rgb(42, 170, 255) 93%,#0000);
+  background: 
+    var(--c) ,var(--r1),var(--r2),
+    var(--c) ,var(--r1),var(--r2),
+    var(--c) ,var(--r1),var(--r2);
+  background-repeat: no-repeat;
+  animation: l2 1s infinite alternate;
+}
+@keyframes l2 {
+  0%,25% {
+    background-size: 8px 0,8px 4px,8px 4px,8px 0,8px 4px,8px 4px,8px 0,8px 4px,8px 4px;
+    background-position: 0 50%,0 calc(50% - 2px),0 calc(50% + 2px),50% 50%,50% calc(50% - 2px),50% calc(50% + 2px),100% 50%,100% calc(50% - 2px),100% calc(50% + 2px);
+ }
+ 50% {
+    background-size: 8px 100%,8px 4px,8px 4px,8px 0,8px 4px,8px 4px,8px 0,8px 4px,8px 4px;
+    background-position: 0 50%,0 calc(0% - 2px),0 calc(100% + 2px),50% 50%,50% calc(50% - 2px),50% calc(50% + 2px),100% 50%,100% calc(50% - 2px),100% calc(50% + 2px);
+ }
+ 75% {
+    background-size: 8px 100%,8px 4px,8px 4px,8px 100%,8px 4px,8px 4px,8px 0,8px 4px,8px 4px;
+    background-position: 0 50%,0 calc(0% - 2px),0 calc(100% + 2px),50% 50%,50% calc(0% - 2px),50% calc(100% + 2px),100% 50%,100% calc(50% - 2px),100% calc(50% + 2px);
+ }
+ 95%,100% {
+    background-size: 8px 100%,8px 4px, 8px 4px,8px 100%,8px 4px,8px 4px,8px 100%,8px 4px,8px 4px;
+    background-position: 0 50%,0 calc(0% - 2px),0 calc(100% + 2px),50% 50%,50% calc(0% - 2px),50% calc(100% + 2px),100% 50%,100% calc(0% - 2px),100% calc(100% + 2px);
+ }
+}
+
+/* Mobile (floating sidebar) */
+@media (max-width: 768px) {
+    .burger {
+        display: block;
+    }
+    .burger-inactive {
+        display: none;
+    }
+    .sidebar h2 {
+        font-size: 22px;
+    }
+    .gym-logoname img {
+        margin-right: 10px;
+        width: 38px;
+        height: 38px;
+    }
+    /*Master responsive*/
+    .section {
+        width: 262px;       /* fixed width */
+        max-width: 262px;
+        min-width: 262px;
+        margin: 60px auto;  /* top-bottom = 60px, left-right = auto → centers it */
+    }
+    .sidebar {
+        width: 210px;
+        position: fixed;
+        top: 0;
+        left: -220px; /* hidden off-screen */
+        height: 100%;
+        z-index: 1500;
+    }
+    .sidebar a {
+        font-size: 14px;
+        left: -4px; /* Makes the sidebar text align closer in the left side on mobile */
+        pointer-events: none; /* disable links when sidebar hidden. Bug patched */
+    }
+    .sidebar.open {
+        left: 0; /* slides in */
+    }
+    .sidebar.open a {
+        pointer-events: auto; /* enable links only when sidebar is open */
+    }
+    a {
+        font-size: 12.5px;
+    }
+    #inAppNotice span {
+        width: 180px;
+        font-size: 10px;
+    }
+}
