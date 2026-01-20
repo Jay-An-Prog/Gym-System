@@ -285,10 +285,9 @@ async function generateAIOutput(aiInput) {
                     Do not use bullets, numbers, symbols, or markdown. Do not ask questions. Only give advice.
 
                     Before giving any analysis, mentally verify that you clearly recognize and understand 
-                    each exercise name in the log. If an exercise name is unfamiliar, unclear, misspelled, 
-                    brand-specific, or unrecognizable, do not analyze it, critique it, or make assumptions 
-                    about it. Simply ignore that exercise and give feedback only on the exercises you clearly 
-                    understand.
+                    each exercise name in the log. If an exercise name is unfamiliar, briefly acknowledge that 
+                    it is not clearly identified and do not analyze it or give advice for it. Continue coaching 
+                    only on the exercises you clearly understand.
 
                     Give feedback based on research-backed evidence and current training science. 
                     Adjust sets, reps, weight, and rest dynamically according to the exercise type, intensity, 
@@ -352,3 +351,4 @@ async function getAIOutputFromFirestore() {
     }
 
 }
+
