@@ -208,6 +208,7 @@ function getFormData(form) {
 async function uploadImages() {
     let faceFileId = "";
     let idFileId = "";
+    let idImageURL = "";
 
     try {
         const memberId = sessionStorage.getItem("member_id");
@@ -265,11 +266,12 @@ async function uploadImages() {
         }
 
         // Generate preview URL so it can be reuse
-        const faceImageURL = storage
-            .getFileView(BUCKET_ID, faceFileId)
-            .toString();
+        const faceImageURL = storage.getFileView(BUCKET_ID, faceFileId).toString();
+        if (idFileId) {
+            idImageURL = storage.getFileView(BUCKET_ID, idFileId).toString();
+        }
 
-        return { faceFileId, idFileId, faceImageURL };
+        return { faceFileId, idFileId, faceImageURL, idImageURL };
 
     } catch (err) {
         console.error("Appwrite Upload Error:", err);
@@ -329,7 +331,8 @@ uploadForm.addEventListener("submit", async (e) => {
             last_name: form.last_name.value,
             face_file_id: uploadedFiles.faceFileId,
             face_image_url: uploadedFiles.faceImageURL,
-            id_file_id: uploadedFiles.idFileId
+            id_file_id: uploadedFiles.idFileId,
+            id_image_url: uploadedFiles.idImageURL
         });
 
         // PHASE 3: RTDB (only after Firestore success)
