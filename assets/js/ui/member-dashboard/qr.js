@@ -207,7 +207,7 @@ document.body.insertAdjacentHTML("beforeend", `
       </button>     
       
       <button class="pdf-btn" id="pdfBtn" onclick="choose('C')">
-        📄 Download PDF (.pdf)
+        📄 Download PDF
       </button>
     </div>
   </div>
