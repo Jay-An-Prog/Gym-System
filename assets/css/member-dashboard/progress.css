@@ -244,9 +244,6 @@ select:focus:invalid {
     .history-card button {
         font-size: 9px;
     }
-    .ai-placeholder small {
-        font-size: 0.6rem;
-    }
     .info-table th, .info-table td {
         padding: 6px;
         font-size: 12px;
