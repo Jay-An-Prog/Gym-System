@@ -202,9 +202,13 @@ document.body.insertAdjacentHTML("beforeend", `
         📷 Save as Image
       </button>
 
-      <button class="print-btn" onclick="choose('B')">
+      <button class="print-btn" id="printBtn" onclick="choose('B')">
         🖨️ Print ID
-      </button>      
+      </button>     
+      
+      <button class="pdf-btn" id="pdfBtn" onclick="choose('C')">
+        📄 Download PDF (.pdf)
+      </button>
     </div>
   </div>
 `);
@@ -215,3 +219,19 @@ optionBox.addEventListener("click", function(event) {
     optionBox.style.display = "none";
   }
 });
+// Toggle button depend on user device
+if (isMobileDevice()) {
+    document.getElementById("printBtn").classList.add("hidden");
+    document.getElementById("pdfBtn").classList.remove("hidden");
+} else {
+    document.getElementById("printBtn").classList.remove("hidden");
+    document.getElementById("pdfBtn").classList.add("hidden");
+}
+function isMobileDevice() {
+    const ua = navigator.userAgent;
+    const mobileUA = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(ua);
+    const smallScreen = window.innerWidth <= 768;
+    const touch = navigator.maxTouchPoints > 0;
+
+    return mobileUA || (smallScreen && touch);
+}
